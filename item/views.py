@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from .forms import NewItemForm
 from .models import Item
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-from .forms import NewItemForm
 
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
@@ -24,11 +24,12 @@ def new(request):
             item.created_by = request.user
             item.save()
 
-            return redirect('item:detail', pk=item.id)
+            return redirect('item:detail', pk=item.id)            
     else:
         form = NewItemForm()
 
     return render(request, 'item/form.html', {
         'form': form,
-        'title': 'New Item'
+        'title': 'New Item',
     })
+
